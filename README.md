@@ -7,7 +7,7 @@ Following is the process to scan multiple accounts via STS:
 aws iam create-role --path /service/ --role-name cross-access-role --assume-role-policy-document '{ "Version": "2008-10-17",
  "Statement": [ { "Sid": "", "Effect": "Allow", "Principal": { "AWS": "arn:aws:iam::<sourceaccountid>:user/<username>" }, "Action": "sts:AssumeRole" } ] }'
 
-Step 2: Attach a policy to the role to only list instances and describe tags
+- Step 2: Attach a policy to the role to only list instances and describe tags
 
 aws iam put-role-policy --policy-name 'cross-access-policy' --role-name cross-access-role --policy-document '{ "Statement": [ { "Sid": "", "Action": 
 [ "ec2:DescribeInstances", "ec2:DescribeTags", "route53:Get*", "route53:List*", "rds:Describe*", "elasticloadbalancing:Describe*" ], "Effect": "Allow", "Resource": "*" } ] }'
