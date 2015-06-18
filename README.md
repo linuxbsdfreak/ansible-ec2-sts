@@ -12,11 +12,6 @@ aws iam create-role --path /service/ --role-name cross-access-role --assume-role
 aws iam put-role-policy --policy-name 'cross-access-policy' --role-name cross-access-role --policy-document '{ "Statement": [ { "Sid": "", "Action": 
 [ "ec2:DescribeInstances", "ec2:DescribeTags", "route53:Get*", "route53:List*", "rds:Describe*", "elasticloadbalancing:Describe*" ], "Effect": "Allow", "Resource": "*" } ] }'
 
-- Step3 : Using the access and secret keys of the <sourceaccountid>:user/<username>.
+- Step3: export AWS_ACCESS_KEY_ID=xxxx;  export AWS_SECRET_ACCESS_KEY=xxxxxx for the user present in the master account who has access to perform the cross account access
 
-Place the keys in the section on the ec2.ini
-
-[master-account]
-key = xxxxx
-secret = xxxxxx
 

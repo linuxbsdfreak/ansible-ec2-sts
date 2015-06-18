@@ -153,16 +153,13 @@ class Ec2Inventory(object):
         self.read_settings()
         self.parse_cli_args()
 
-        if 'master-account' in self.aws_creds.keys():                             
-            sts_connection = STSConnection(                                        
-                 aws_access_key_id=self.aws_creds["master-account"]["key"],          
-                 aws_secret_access_key=self.aws_creds["master-account"]["secret"]                                    
-       )  
+        #Initiate the STS connection:                             
+        sts_connection = STSConnection( )
 
         data_to_print = {}
         for i in self.aws_creds.keys():
-            
-            if i != 'master-account':
+           
+              # Creating the object from the sts_connection
               assumedRoleObject = sts_connection.assume_role(
                   role_arn=self.aws_creds[i]["arn"],
                   role_session_name="AssumeRoleSession")
@@ -219,13 +216,7 @@ class Ec2Inventory(object):
         self.aws_creds = {}
         for i in config.sections():
             if i != 'ec2':
-                if i != 'master-account':
                       auth = {'arn': config.get(i, 'arn')}
-                      self.aws_creds[i] = auth
-                else:            
-                      auth = {'key': config.get(i, 'key'),
-                            'secret': config.get(i, 'secret')
-                             }
                       self.aws_creds[i] = auth
 
         # is eucalyptus?
